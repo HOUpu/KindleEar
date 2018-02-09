@@ -25,8 +25,8 @@ class BaseFeedBook:
     title                 = ''
     __author__            = ''
     description           = ''
-    max_articles_per_feed = 30
-    oldest_article        = 7    #下载多长时间之内的文章，小于等于365则单位为天，大于365则单位为秒，0为不限制
+    max_articles_per_feed = 10000
+    oldest_article        = 365    #下载多长时间之内的文章，小于等于365则单位为天，大于365则单位为秒，0为不限制
     host                  = None # 有些网页的图像下载需要请求头里面包含Referer,使用此参数配置
     network_timeout       = None  # None则使用默认
     fetch_img_via_ssl     = False # 当网页为https时，其图片是否也转换成https
@@ -284,7 +284,7 @@ class BaseFeedBook:
                         if self.oldest_article > 365:
                             threshold = self.oldest_article #以秒为单位
                         else:
-                            threshold = 86400*self.oldest_article #以天为单位
+                            threshold = 1209600*self.oldest_article #以天为单位
                         
                         if delta.days*86400+delta.seconds > threshold:
                             self.log.info("Skip old article(%s): %s" % (updated.strftime('%Y-%m-%d %H:%M:%S'), e.link))
